@@ -43,23 +43,23 @@ namespace Lumia950DeleteDuplicates
             var filesToMove = new HashSet<string>();
             foreach (var group in filteredGroupedPictures)
             {
-                var jpgFile = group.Value.FirstOrDefault(p => Path.GetExtension(p) == ".jpg");
+                var jpgFile = group.Value.OrderBy(p => p.Length).FirstOrDefault(p => Path.GetExtension(p) == ".jpg");
                 var jpgFileNameWithoutExtension = Path.GetFileNameWithoutExtension(jpgFile);
                 var matchingDNGFile = $"{jpgFileNameWithoutExtension}__highres.dng";
                 var matchingDNGFile_shortexp = $"{jpgFileNameWithoutExtension}__highres.shortexp.dng";
                 var matchingDNGFile_longexp = $"{jpgFileNameWithoutExtension}__highres.longexp.dng";
                 var matchingDNGFile_noflash = $"{jpgFileNameWithoutExtension}__highres.noflash.dng";
                 var matchingDNGFile_flash = $"{jpgFileNameWithoutExtension}__highres.flash.dng";
+                var matchingDNGFile_ev0 = $"{jpgFileNameWithoutExtension}__highres.ev0.dng";
                 if (group.Value.Contains(matchingDNGFile)
-                    || (group.Value.Contains(matchingDNGFile_shortexp) && group.Value.Contains(matchingDNGFile_longexp))
-                    || (group.Value.Contains(matchingDNGFile_noflash) && group.Value.Contains(matchingDNGFile_flash)))
+                    || group.Value.Contains(matchingDNGFile_shortexp)
+                    || group.Value.Contains(matchingDNGFile_longexp)
+                    || group.Value.Contains(matchingDNGFile_noflash)
+                    || group.Value.Contains(matchingDNGFile_flash)
+                    || group.Value.Contains(matchingDNGFile_ev0))
                 {
                     filesToMove.Add(jpgFile);
-                }
-                else
-                {
-                    Console.WriteLine(jpgFile);
-                }
+                }        
             }
             Console.WriteLine($"Found {filesToMove.Count} pictures to move");
 
