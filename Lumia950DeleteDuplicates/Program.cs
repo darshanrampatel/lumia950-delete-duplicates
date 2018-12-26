@@ -12,6 +12,7 @@ namespace Lumia950DeleteDuplicates
             Console.WriteLine("Running...");
             Console.WriteLine();
             var folderPath = Path.Combine(Environment.GetEnvironmentVariable("USERPROFILE"), @"OneDrive\Pictures\Camera Roll");
+            var newFolderPath = Path.Combine(Environment.GetEnvironmentVariable("USERPROFILE"), @"Downloads\Duplicates");
             var files = Directory.EnumerateFiles(folderPath, "*");
             var filesHash = new HashSet<string>();
             foreach (var file in files)
@@ -63,7 +64,6 @@ namespace Lumia950DeleteDuplicates
             }
             Console.WriteLine($"Found {filesToMove.Count} pictures to move");
 
-            var newFolderPath = Path.Combine(folderPath, "Duplicates");
             if (!Directory.Exists(newFolderPath))
             {
                 Directory.CreateDirectory(newFolderPath);
