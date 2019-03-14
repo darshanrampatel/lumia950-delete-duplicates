@@ -38,8 +38,9 @@ namespace Lumia950DeleteDuplicates
                 {
                     filteredGroupedPictures.Add(group.Key, group.Value);
                 }
+                Console.WriteLine($"{group.Key} -> {group.Value.Count} duplicates");
             }
-            Console.WriteLine($"Found {filteredGroupedPictures.Count} filtered grouped files with duplicates");
+            Console.WriteLine($"Found {groupedPictures.Count} final grouped files with duplicates");
 
             var filesToMove = new HashSet<string>();
             foreach (var group in filteredGroupedPictures)
@@ -60,7 +61,7 @@ namespace Lumia950DeleteDuplicates
                     || group.Value.Contains(matchingDNGFile_ev0))
                 {
                     filesToMove.Add(jpgFile);
-                }        
+                }
             }
             Console.WriteLine($"Found {filesToMove.Count} pictures to move");
 
